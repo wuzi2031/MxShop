@@ -20,18 +20,21 @@ from MxShop.settings import MEDIA_ROOT
 from django.views.static import serve
 from rest_framework.documentation import include_docs_urls
 from rest_framework.routers import DefaultRouter
+from rest_framework_jwt.views import obtain_jwt_token,verify_jwt_token
 
-from goods.views import GoodsListViewSet,Hello
+from goods.views import GoodsListViewSet, Hello
 
 router = DefaultRouter()
-router.register(r'goods',GoodsListViewSet,base_name='goods')
+router.register(r'goods', GoodsListViewSet, base_name='goods')
 urlpatterns = [
-    url(r'^$',Hello,name='hello'),
+    url(r'^$', Hello, name='hello'),
     url(r'^xadmin/', xadmin.site.urls),
     url(r'^media/(?P<path>.*)$', serve, {"document_root": MEDIA_ROOT}),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^docs/', include_docs_urls(title='慕学生鲜')),
-    #商品列表
+    # 商品列表
     # url(r'^goods/$',GoodsListView.as_view(),name='goods-list')
-    url(r'^',include(router.urls))
+    url(r'^', include(router.urls)),
+    url(r'^login/', obtain_jwt_token),
+    url(r'^verify_jwt_token/', verify_jwt_token),
 ]

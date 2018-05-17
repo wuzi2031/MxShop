@@ -10,7 +10,8 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter, OrderingFilter
 from .filters import GoodsFilter
 from .models import Goods
-
+from rest_framework_jwt.authentication import JSONWebTokenAuthentication
+from rest_framework.permissions import IsAuthenticated
 
 # Create your views here.
 
@@ -48,8 +49,10 @@ class GoodsListViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
     """
     queryset = Goods.objects.all()
     serializer_class = GoodsSerializer
-    pagination_class = GoodsPagination
-    filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
-    filter_class = GoodsFilter
-    search_fields = ('name', 'goods_brief', 'goods_desc')
-    ordering_fields = ('sold_num', 'add_time')
+    pagination_class = GoodsPagination  # 分页
+    permission_classes = (IsAuthenticated,)  # 登录验证
+    authentication_classes = (JSONWebTokenAuthentication,)  # jwt验证
+    filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)  # 搜索排序过滤
+    filter_class = GoodsFilter  # 商品自定义过滤
+    search_fields = ('name', 'goods_brief', 'goods_desc')  # 搜索字段
+    ordering_fields = ('sold_num', 'add_time')  # 排序字段

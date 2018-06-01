@@ -20,12 +20,15 @@ from MxShop.settings import MEDIA_ROOT
 from django.views.static import serve
 from rest_framework.documentation import include_docs_urls
 from rest_framework.routers import DefaultRouter
-from rest_framework_jwt.views import obtain_jwt_token,verify_jwt_token
+from rest_framework_jwt.views import obtain_jwt_token, verify_jwt_token
 
 from goods.views import GoodsListViewSet, Hello
+from apps.users.views import VerifyCodeViewSet, UserViewSet
 
 router = DefaultRouter()
 router.register(r'goods', GoodsListViewSet, base_name='goods')
+router.register(r'verify_code', VerifyCodeViewSet, base_name='verify_code')
+router.register(r'user', UserViewSet, base_name='regist')
 urlpatterns = [
     url(r'^$', Hello, name='hello'),
     url(r'^xadmin/', xadmin.site.urls),

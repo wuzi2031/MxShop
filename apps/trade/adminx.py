@@ -2,7 +2,7 @@
 __author__ = 'bobby'
 
 import xadmin
-from .models import ShoppingCart, OrderInfo, OrderGoods
+from .models import ShoppingCart, Order, OrderGoods
 
 class ShoppingCartAdmin(object):
     list_display = ["user", "goods", "nums", ]
@@ -22,4 +22,4 @@ class OrderInfoAdmin(object):
 
 
 xadmin.site.register(ShoppingCart, ShoppingCartAdmin)
-xadmin.site.register(OrderInfo, OrderInfoAdmin)
+xadmin.site.register(Order, OrderInfoAdmin)

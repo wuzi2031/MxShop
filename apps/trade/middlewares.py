@@ -8,6 +8,7 @@ class TestMiddleware(MiddlewareMixin):
     def process_response(self, request, response):
         print('process_response')
         return response
+
     def process_view(self, request, view_func, view_args, view_kwargs):
         print('process_view')
 

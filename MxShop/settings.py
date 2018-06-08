@@ -28,7 +28,7 @@ SECRET_KEY = '%#g&c&3lh+3dn8^9q257o8(5c#s2__&7zpzq&dvtl^@e9a@tq2'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['120.79.16.35','127.0.0.1','localhost']
 AUTH_USER_MODEL = 'users.UserProfile'
 
 # Application definition
@@ -90,8 +90,10 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': "mxshop",
         'USER': 'root',
-        'PASSWORD': "Wzm@123456",
-        'HOST': "127.0.0.1",
+        # 'PASSWORD': "Wzm@123456",
+        # 'HOST': "127.0.0.1",
+        'PASSWORD': "123456",
+        'HOST': "120.79.16.35",
         'OPTIONS': {'init_command': 'SET default_storage_engine=INNODB;'},
     }
 }

@@ -26,7 +26,8 @@ sys.path.insert(0, os.path.join(BASE_DIR, "extra_apps"))
 SECRET_KEY = '%#g&c&3lh+3dn8^9q257o8(5c#s2__&7zpzq&dvtl^@e9a@tq2'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False#线上部署
+# DEBUG = True
 
 ALLOWED_HOSTS = ['120.79.16.35','127.0.0.1','localhost']
 AUTH_USER_MODEL = 'users.UserProfile'
@@ -130,9 +131,13 @@ USE_TZ = False  # 默认是Ture，时间是utc时间，由于我们要用本地�
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, "static/mxshop"),
+)
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = os.path.join(BASE_DIR, '/media')
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (

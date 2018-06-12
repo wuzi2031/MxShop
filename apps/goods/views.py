@@ -12,7 +12,7 @@ from .filters import GoodsFilter
 from .models import Goods
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 from rest_framework.permissions import IsAuthenticated
-
+from rest_framework_extensions.cache.mixins import CacheResponseMixin
 # Create your views here.
 
 def Hello(request):
@@ -43,7 +43,7 @@ class GoodsPagination(PageNumberPagination):
     max_page_size = 100
 
 
-class GoodsListViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
+class GoodsListViewSet(CacheResponseMixin,mixins.ListModelMixin, viewsets.GenericViewSet):
     """
     商品列表，分页，搜索，过滤，排序
     """

@@ -26,8 +26,8 @@ sys.path.insert(0, os.path.join(BASE_DIR, "extra_apps"))
 SECRET_KEY = '%#g&c&3lh+3dn8^9q257o8(5c#s2__&7zpzq&dvtl^@e9a@tq2'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False#线上部署
-# DEBUG = True
+# DEBUG = False#线上部署
+DEBUG = True
 
 ALLOWED_HOSTS = ['120.79.16.35','127.0.0.1','localhost']
 AUTH_USER_MODEL = 'users.UserProfile'
@@ -52,7 +52,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    'apps.trade.middlewares.TestMiddleware',
+    # 'apps.trade.middlewares.TestMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -148,8 +148,66 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.BasicAuthentication',
     ),
+    # 'DEFAULT_THROTTLE_CLASSES': (
+    #     'rest_framework.throttling.AnonRateThrottle',
+    #     'rest_framework.throttling.UserRateThrottle'
+    # ),
+    # 'DEFAULT_THROTTLE_RATES': {
+    #     'anon': '2/minute',
+    #     'user': '3/minute'
+    # }
 }
 import datetime
 JWT_AUTH = {
     'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=30000),
+}
+
+# REST_FRAMEWORK_EXTENSIONS = {
+#     'DEFAULT_OBJECT_CACHE_KEY_FUNC':
+#       'rest_framework_extensions.utils.default_object_cache_key_func',
+#     'DEFAULT_LIST_CACHE_KEY_FUNC':
+#       'rest_framework_extensions.utils.default_list_cache_key_func',
+#     'DEFAULT_CACHE_RESPONSE_TIMEOUT': 60 * 15
+# }
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://120.79.16.35:6379",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+            # "PASSWORD": "mysecret",
+        }
+    }
+}
+# REDIS_TIMEOUT=7*24*60*60
+# CUBES_REDIS_TIMEOUT=60*60
+# NEVER_REDIS_TIMEOUT=365*24*60*60
+
+LOGGING = {
+    'disable_existing_loggers': False,
+    'version': 1,
+    'handlers': {
+        'console': {
+            # logging handler that outputs log messages to terminal
+            'class': 'logging.StreamHandler',
+            'level': 'DEBUG', # message level to be written to console
+        },
+    },
+    'loggers': {
+        '': {
+            # this sets root level logger to log debug and higher level
+            # logs to console. All other loggers inherit settings from
+            # root level logger.
+            'handlers': ['console'],
+            'level': 'DEBUG',
+            'propagate': False, # this tells logger to send logging message
+                                # to its parent (will send if set to True)
+        },
+        'django.db': {
+            # # django also has database level logging
+            'handlers': ['console'],
+            'level': 'DEBUG',
+            'propagate': False,
+        },
+    },
 }
